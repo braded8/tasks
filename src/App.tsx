@@ -9,9 +9,10 @@ import truffles from "./images/truffles.jpeg";
 function App(): JSX.Element {
     return (
         <div className="App">
-            <h1 className="App-header" style={{ background: "#5878BF" }}>
+            <header className="App-header" style={{ background: "#5878BF" }}>
                 UD CISC275 with React Hooks and TypeScript, Brad Daugherty
-            </h1>
+            </header>
+            <h1 style={{ background: "#184E54" }}>What am I doing?</h1>
             <p>
                 Edit <code>src/App.tsx</code> and save. This page will
                 automatically reload. Hello World
