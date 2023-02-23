@@ -123,12 +123,14 @@ export function injectPositive(values: number[]): number[] {
     let index = values.findIndex((value: number): boolean =>
         negative ? value < 0 : values.indexOf(value) === values.length - 1
     );
+    // eslint-disable-next-line no-extra-parens
     negative ? index : (index += 1);
     const sum = values.reduce(
         (total: number, value: number): number =>
             values.indexOf(value) < index ? (total += value) : total,
         0
     );
+    // eslint-disable-next-line no-extra-parens
     negative ? (index += 1) : index;
     const final = [...values];
     final.splice(index, 0, sum);
