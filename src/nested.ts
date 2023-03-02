@@ -6,7 +6,10 @@ import { Question, QuestionType } from "./interfaces/question";
  * that are `published`.
  */
 export function getPublishedQuestions(questions: Question[]): Question[] {
-    return [];
+    const publishedQuestions: Question[] = questions.filter(
+        (question: Question): boolean => question.published
+    );
+    return publishedQuestions;
 }
 
 /**
@@ -15,7 +18,17 @@ export function getPublishedQuestions(questions: Question[]): Question[] {
  * `expected`, and an empty array for its `options`.
  */
 export function getNonEmptyQuestions(questions: Question[]): Question[] {
-    return [];
+    const nonEmptyQuestions: Question[] = questions.filter(
+        (question: Question): boolean =>
+            !(
+                question.body === "" &&
+                question.expected === "" &&
+                (question.type === "multiple_choice_question"
+                    ? question.options.length === 0
+                    : true)
+            )
+    );
+    return nonEmptyQuestions;
 }
 
 /***
@@ -26,7 +39,13 @@ export function findQuestion(
     questions: Question[],
     id: number
 ): Question | null {
-    return null;
+    let result: Question | null;
+    const findId: Question[] = questions.filter(
+        (question: Question): boolean => question.id === id
+    );
+    // eslint-disable-next-line no-extra-parens
+    findId.length === 0 ? (result = null) : (result = findId[0]);
+    return result;
 }
 
 /**
@@ -34,7 +53,10 @@ export function findQuestion(
  * with the given `id`.
  */
 export function removeQuestion(questions: Question[], id: number): Question[] {
-    return [];
+    const removeId: Question[] = questions.filter(
+        (question: Question): boolean => question.id !== id
+    );
+    return removeId;
 }
 
 /***
@@ -42,14 +64,24 @@ export function removeQuestion(questions: Question[], id: number): Question[] {
  * questions, as an array.
  */
 export function getNames(questions: Question[]): string[] {
-    return [];
+    const moviesNames = questions.map(
+        (question: Question): string => question.name
+    );
+    return moviesNames;
 }
 
 /***
  * Consumes an array of questions and returns the sum total of all their points added together.
  */
 export function sumPoints(questions: Question[]): number {
-    return 0;
+    const points = questions.map(
+        (question: Question): number => question.points
+    );
+    const sum = points.reduce(
+        (total: number, point: number) => (total += point),
+        0
+    );
+    return sum;
 }
 
 /***
