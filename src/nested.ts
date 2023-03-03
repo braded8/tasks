@@ -1,6 +1,6 @@
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
-import { makeBlankQuestion } from "./objects";
+import { duplicateQuestion, makeBlankQuestion } from "./objects";
 
 /**
  * Consumes an array of questions and returns a new array with only the questions
@@ -190,7 +190,8 @@ export function addNewQuestion(
     type: QuestionType
 ): Question[] {
     const newQuestion = makeBlankQuestion(id, name, type);
-    const newQuestions = questions.map(
+    const copy = [...questions, newQuestion];
+    const newQuestions = copy.map(
         (question: Question): Question => ({
             ...question,
             options: [...question.options]
@@ -209,7 +210,14 @@ export function renameQuestionById(
     targetId: number,
     newName: string
 ): Question[] {
-    return [];
+    const newQuestions = questions.map(
+        (question: Question): Question => ({
+            ...question,
+            options: [...question.options],
+            name: question.id === targetId ? newName : question.name
+        })
+    );
+    return newQuestions;
 }
 
 /***
@@ -224,7 +232,23 @@ export function changeQuestionTypeById(
     targetId: number,
     newQuestionType: QuestionType
 ): Question[] {
-    return [];
+    const newQuestions1 = questions.map(
+        (question: Question): Question => ({
+            ...question,
+            options: [...question.options],
+            type: question.id === targetId ? newQuestionType : question.type
+        })
+    );
+    const newQuestions2 = newQuestions1.map(
+        (question: Question): Question => ({
+            ...question,
+            options:
+                question.type === "short_answer_question"
+                    ? []
+                    : [...question.options]
+        })
+    );
+    return newQuestions2;
 }
 
 /**
