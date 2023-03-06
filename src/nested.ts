@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-parens */
 import { Answer } from "./interfaces/answer";
 import { Question, QuestionType } from "./interfaces/question";
 import { duplicateQuestion, makeBlankQuestion } from "./objects";
@@ -267,7 +268,25 @@ export function editOption(
     targetOptionIndex: number,
     newOption: string
 ): Question[] {
-    return [];
+    let targetIndex = questions.findIndex(
+        (question: Question): boolean => question.id === targetId
+    );
+    const newOptions = [...questions[targetIndex].options];
+    const spliceAmt = questions[targetIndex].options.length > 0 ? 1 : 0;
+    targetOptionIndex === -1
+        ? questions[targetIndex].options.length === 0
+            ? (targetIndex = 0)
+            : (targetIndex = questions[targetIndex].options.length)
+        : (targetIndex = targetOptionIndex);
+    newOptions.splice(targetIndex, spliceAmt, newOption);
+    const newQuestions = questions.map(
+        (question: Question): Question => ({
+            ...question,
+            options:
+                question.id === targetId ? newOptions : [...question.options]
+        })
+    );
+    return newQuestions;
 }
 
 /***
@@ -281,5 +300,18 @@ export function duplicateQuestionInArray(
     targetId: number,
     newId: number
 ): Question[] {
-    return [];
+    const targetIndex = questions.findIndex(
+        (question: Question): boolean => question.id === targetId
+    );
+    const targetQuestion = questions[targetIndex];
+    const newQuestion = duplicateQuestion(newId, targetQuestion);
+    const copy = [...questions];
+    copy.splice(targetIndex + 1, 0, newQuestion);
+    const newQuestions = copy.map(
+        (question: Question): Question => ({
+            ...question,
+            options: [...question.options]
+        })
+    );
+    return newQuestions;
 }
