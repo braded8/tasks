@@ -6,15 +6,25 @@ export function StartAttempt(): JSX.Element {
     const [attempts, setAttempts] = useState<number>(4);
 
     function startQuiz(): void {
-        () => setProgress(true);
-        () => setAttempts(attempts - 1);
+        setProgress(true);
+    }
+
+    function decreaseAttempts(): void {
+        setAttempts(attempts - 1);
+    }
+
+    function increaseAttempts(): void {
+        setAttempts(attempts + 1);
     }
 
     return (
         <div>
             <div>
                 <Button
-                    onClick={startQuiz}
+                    onClick={() => {
+                        startQuiz();
+                        decreaseAttempts();
+                    }}
                     disabled={progress || attempts === 0}
                 >
                     Start Quiz
@@ -24,10 +34,7 @@ export function StartAttempt(): JSX.Element {
                 </Button>
             </div>
             <div>
-                <Button
-                    onClick={() => setAttempts(1 + attempts)}
-                    disabled={progress}
-                >
+                <Button onClick={increaseAttempts} disabled={progress}>
                     Mulligan
                 </Button>
                 to {attempts}
