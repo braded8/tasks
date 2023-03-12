@@ -43,9 +43,7 @@ export function ColoredBox(): JSX.Element {
             <span>The current color is: {COLORS[colorIndex]}</span>
             <div>
                 <ChangeColor
-                    setColorIndex={() =>
-                        setColorIndex((1 + colorIndex) % COLORS.length)
-                    }
+                    setColorIndex={setColorIndex}
                     colorIndex={colorIndex}
                 ></ChangeColor>
                 <ColorPreview

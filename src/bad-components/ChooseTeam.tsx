@@ -1,4 +1,3 @@
-/* eslint-disable indent */
 import React, { useState } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 
@@ -17,15 +16,12 @@ export function ChooseTeam(): JSX.Element {
 
     function chooseMember(newMember: string) {
         !team.includes(newMember) ? setTeam([...team, newMember]) : team;
-        team.includes(newMember) && allOptions.includes(newMember)
-            ? setAllOptions(
-                  allOptions.filter((option: string) => option !== newMember)
-              )
-            : allOptions;
+        setAllOptions(allOptions);
     }
 
     function clearTeam() {
         setTeam(team.filter((member: string) => member === ""));
+        setAllOptions(allOptions);
     }
 
     return (
