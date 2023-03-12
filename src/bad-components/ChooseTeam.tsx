@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import React, { useState } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 
@@ -14,18 +15,17 @@ export function ChooseTeam(): JSX.Element {
     const [allOptions, setAllOptions] = useState<string[]>(PEOPLE);
     const [team, setTeam] = useState<string[]>([]);
 
-    function chooseMember() {
-        /*
-        if (!team.includes(newMember)) {
-            team.push(newMember);
-        }
-        */
+    function chooseMember(newMember: string) {
+        !team.includes(newMember) ? setTeam([...team, newMember]) : team;
+        team.includes(newMember) && allOptions.includes(newMember)
+            ? setAllOptions(
+                  allOptions.filter((option: string) => option !== newMember)
+              )
+            : allOptions;
     }
 
     function clearTeam() {
-        /*
-        team = [];
-        */
+        setTeam(team.filter((member: string) => member === ""));
     }
 
     return (
@@ -36,7 +36,10 @@ export function ChooseTeam(): JSX.Element {
                     {allOptions.map((option: string) => (
                         <div key={option} style={{ marginBottom: "4px" }}>
                             Add{" "}
-                            <Button onClick={chooseMember} size="sm">
+                            <Button
+                                onClick={() => chooseMember(option)}
+                                size="sm"
+                            >
                                 {option}
                             </Button>
                         </div>
