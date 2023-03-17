@@ -21,9 +21,6 @@ export function GiveAttempts(): JSX.Element {
     return (
         <div>
             <div>
-                Number of Attempts Left: <span>{attemptsLeft}</span>
-            </div>
-            <div>
                 <FormGroup controlId="formAttempts">
                     <FormLabel>Give Attempts</FormLabel>
                     <FormControl
@@ -32,6 +29,9 @@ export function GiveAttempts(): JSX.Element {
                         onChange={updateAttemptsWanted}
                     ></FormControl>
                 </FormGroup>
+            </div>
+            <div>
+                Number of Attempts Left: <span>{attemptsLeft}</span>
             </div>
             <div>
                 <Button onClick={addAttempts}>Gain</Button>
