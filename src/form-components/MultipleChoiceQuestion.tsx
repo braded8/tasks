@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-    Button,
-    FormControl,
-    FormSelect,
-    FormLabel,
-    FormGroup
-} from "react-bootstrap";
+import { FormSelect, FormLabel, FormGroup } from "react-bootstrap";
 
 export function MultipleChoiceQuestion({
     options,
@@ -16,13 +10,23 @@ export function MultipleChoiceQuestion({
 }): JSX.Element {
     const [userChoice, setUserChoice] = useState<string>(options[0]);
 
+    function updateChoice(event: React.ChangeEvent<HTMLSelectElement>) {
+        setUserChoice(event.target.value);
+    }
+
     return (
         <div>
             <FormGroup controlId="userOptions">
-                <FormLabel>What is your answer?</FormLabel>
-                <FormSelect value={userChoice}></FormSelect>
+                <FormLabel>Select an Option</FormLabel>
+                <FormSelect value={userChoice} onChange={updateChoice}>
+                    {options.map((option: string) => (
+                        <option key={option} value={option}>
+                            {option}
+                        </option>
+                    ))}
+                </FormSelect>
             </FormGroup>
-            <h3>Multiple Choice Question</h3>
+            <div>{userChoice === expectedAnswer ? "✔️" : "❌"}</div>
         </div>
     );
 }

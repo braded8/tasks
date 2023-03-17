@@ -36,7 +36,7 @@ export function ChangeColor(): JSX.Element {
                     />
                 ))}
             </div>
-            <span>You have chosen </span>
+            <span>You have chosen</span>
             <div
                 data-testid="colored-box"
                 style={{ backgroundColor: currentColor }}
